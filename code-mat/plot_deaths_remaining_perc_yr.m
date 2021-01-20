@@ -38,15 +38,17 @@ txtfntsize=15;
 txtdate=datetime(2020,12,19);
 k(1)=text(txtdate,-11.4,'Assumptions:','fontsize',txtfntsize);
 k(2)=text(txtdate,-14.5,'1) 50/50 mix of Pfizer and Moderna vaccines','fontsize',txtfntsize);
-k(3)=text(txtdate,-17.6,'2) 80% efficacy 14 days after first shot, 95% 14 days after second shot','fontsize',txtfntsize);
+k(3)=text(txtdate,-17.6,'2) 80% efficacy 15 days after first shot, 95% 15 days after second shot','fontsize',txtfntsize);
 
 k(4)=text(txtdate,-22.5,'Population data from 2019 US Census','fontsize',txtfntsize);
-k(5)=text(txtdate,-25.6,'COVID Deaths-age data from CDC Feb 1st - Dec 16th','fontsize',txtfntsize);
+k(5)=text(txtdate,-25.6,'COVID Deaths data from CDC Feb 1st - Dec 16th','fontsize',txtfntsize);
 k(6)=text(txtdate,-28.7,'Real world ''X'' vaccine data from CDC','fontsize',txtfntsize);
 
 for i=1:6
     k(i).FontAngle='italic';
 end
+
+
 
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -57,13 +59,12 @@ skat=scatter(d.days,vax_perc*100,100,vax_color,'filled');
 hold off
 
 ylim([0 50])
-rylim=ylim;
 ylabel('Percent Vaccinated (dots)','fontsize',30)
 
 %%
 hold on
-plot([datetime('today') datetime('today')],[0 14]/(100/rylim(2)),'k--')
-plot([datetime('today') datetime('today')],[25 100]/(100/rylim(2)),'k--')
+plot([datetime('today') datetime('today')],[0 14]/2,'k--')
+plot([datetime('today') datetime('today')],[25 100]/2,'k--')
 hold off
 
 %%
@@ -89,21 +90,23 @@ scatter(datetime(2021,1,6),5.31/330*100,800,'xk','linewidth',3)
 %scatter(datetime(2021,1,7),5.92/330*100,800,'xk','linewidth',3)
 scatter(datetime(2021,1,8),6.69/330*100,800,'xk','linewidth',3)
 scatter(datetime(2021,1,11),8.99/330*100,800,'xk','linewidth',3)
+scatter(datetime(2021,1,12),9.33/330*100,800,'xk','linewidth',3)
+%scatter(datetime(2021,1,13),10.28/330*100,800,'xk','linewidth',3)
+%scatter(datetime(2021,1,14),11.15/330*100,800,'xk','linewidth',3)
 scatter(datetime(2021,1,15),10.60/330*100,800,'xk','linewidth',3)
-scatter(datetime(2021,1,19),13.60/330*100,800,'xk','linewidth',3)
 
 scatter(datetime(2021,2,1),10,700,'ok','linewidth',3)
 
 hold off
 
-txt=text(datetime(2021,1,1),7,sprintf('X''s are CDC data\n%.2f%% as of Jan 19th',13.60/330*100),'fontsize',20);
+txt=text(datetime(2021,1,1),7,sprintf('X''s are CDC data\n%.2f%% as of Jan 14th',11.15/330*100),'fontsize',20);
 txt.HorizontalAlignment='center';
-txt.Position=[18.5 9.3]
+txt.Position=[19 10];
 %text(datetime(2020,12,16),3.6,sprintf('X''s are current number \ndistributed (CDC)'),'fontsize',20)
 
 an=annotation('textarrow','fontsize',20);
-an.X=[.45 .35];
-an.Y=[.27 .31];
+an.X=[.43 .35];
+an.Y=[.25 .3];
 an.String=sprintf('Roughly 10%% in January\n@ScottGottliebMD Jan 8th Squawk Box');
 an.HorizontalAlignment='center';
 %%
@@ -113,14 +116,14 @@ ax.YAxis(2).Color = vax_color;
 grid on
 fig=gcf;
 fig.Position=[1 65 1115 740];
-ax.Position=[0.1300 0.2000 0.7750 0.6134];
+ax.Position=[0.1300 0.2000 0.7750 0.58];
 
 
-xticks(datetime(2020,12,1):calmonths(1):datetime(2021,6,1))
-xlim([start_date datetime(2021,6,1)])
+xticks(datetime(2020,12,1):calmonths(1):datetime(2021,12,1))
+xlim([start_date datetime(2021,12,1)])
 
 datetick('x','mmm-dd')
-xlim([start_date datetime(2021,6,1)])
+xlim([start_date datetime(2021,12,1)])
 
 
 %%
@@ -129,30 +132,31 @@ xlim([start_date datetime(2021,6,1)])
 
 set(0,'defaultlinelinestyle','-')
 
-[~,ind50]=min(abs(d.v_perc-0.50));
-[~,ind70]=min(abs(d.v_perc-0.30));
+%[~,ind93]=min(abs(d.v_perc-0.93));
+[~,ind30]=min(abs(d.v_perc-0.30));
 
 hold on
 % plot([d1.days(ind50f) d3.days(ind50s)],[50 50]/4,'k-','linewidth',5)
 % plot([d1.days(ind50f) d1.days(ind50f)],[46 54]/4,'k-','linewidth',5)
 % plot([d3.days(ind50s) d3.days(ind50s)],[46 54]/4,'k-','linewidth',5)
-plot([start_date d.days(ind50)],[50 50]/(100/rylim(2)),'k--','linewidth',4)
+%plot([start_date d.days(ind93)],[93 93]/4,'k--','linewidth',4)
 % 
 % plot([d1.days(ind70f) d3.days(ind70s)],[30 30]/4,'k-','linewidth',5)
 % plot([d1.days(ind70f) d1.days(ind70f)],[26 34]/4,'k-','linewidth',5)
 % plot([d3.days(ind70s) d3.days(ind70s)],[26 34]/4,'k-','linewidth',5)
-plot([start_date d.days(ind70)],[30 30]/(100/rylim(2)),'k--','linewidth',4)
+plot([start_date d.days(ind30)],[30 30]/2,'k--','linewidth',4)
 hold off
 
-day50=datestr(d.days(ind50),'mmm dd');
-day70=datestr(d.days(ind70),'mmm dd');
+%%
+%day50=datestr(d.days(ind93),'mmm dd');
+day30=datestr(d.days(ind30),'mmm dd');
 
-title_str=sprintf('US COVID Daily Deaths During Vaccine Rollout\n50%% Reduction around %s \n70%% Reduction around %s',day50,day70);
+title_str=sprintf('US COVID Daily Deaths Percent Reduced During Vaccine Rollout\n\nDaily deaths should permanently drop 70%% before %s',day30);
 title(title_str,'fontsize',30)
 
 %%
 [lgn,b,c,d]=legend('Percent Daily Deaths','Actual Daily Deaths','Percent Vaccinated');
-lgn.Position=[0.6038 0.4744 0.2762 0.1162];
+lgn.Position=[0.6057 0.4460 0.2762 0.1162];
 b(8).Children.MarkerSize=14;
 %%
 print('post/plot_remaining_deaths','-dpng')
